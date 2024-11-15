@@ -3,8 +3,9 @@
 
 
 def reverse_words(s: str) -> str:
-    string = s.split()
-    return ' '.join(string[::-1])
+    """Функция принимает на вход строку, читает ее в обратном порядке (::-1), разбивает по пробелам (.split()),
+    и так же по пробелам объединяет в результирующую строку (.join()), которую возвращает обратно"""
+    return ' '.join(s.split()[::-1])
 
 
 if __name__ == '__main__':
@@ -14,9 +15,14 @@ if __name__ == '__main__':
 Напишите функцию, которая принимает строку и возвращает словарь, 
 где ключами являются символы, а значениями — их частота в строке."""
 
+from collections import Counter
+
 
 def char_frequency(s: str) -> dict:
-    return dict((i, s.count(i)) for i in s)
+    """На вход принимаем строку, а благодаря Counter считаем частоту вхождения символов в эту строку
+    и записываем результат в словарь"""
+    # return dict((i, s.count(i)) for i in s)
+    return dict(Counter(s))
 
 
 if __name__ == '__main__':
