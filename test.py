@@ -2,10 +2,10 @@
 Напишите функцию, которая принимает строку и возвращает её, но со словами в обратном порядке"""
 
 
-def reverse_words(s: str) -> str:
+def reverse_words(word: str) -> str:
     """Функция принимает на вход строку, читает ее в обратном порядке (::-1), разбивает по пробелам (.split()),
     и так же по пробелам объединяет в результирующую строку (.join()), которую возвращает обратно"""
-    return ' '.join(s.split()[::-1])
+    return ' '.join(word.split()[::-1])
 
 
 if __name__ == '__main__':
@@ -18,11 +18,10 @@ if __name__ == '__main__':
 from collections import Counter
 
 
-def char_frequency(s: str) -> dict:
+def char_frequency(word: str) -> dict:
     """На вход принимаем строку, а благодаря Counter считаем частоту вхождения символов в эту строку
     и записываем результат в словарь"""
-    # return dict((i, s.count(i)) for i in s)
-    return dict(Counter(s))
+    return dict(Counter(word))
 
 
 if __name__ == '__main__':

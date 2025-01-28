@@ -4,9 +4,12 @@
 
 
 def is_symmetric(matrix: list) -> bool:
-    """ переворачиваем матрицу и сравниваем с исходнои
-    если матрицы симметричные, то возвращаем True, иначе - Falsĕ"""
-    return matrix == list(reversed(matrix))
+    for i in range(len(matrix)):
+        for j in range(len(matrix)):
+            if matrix[i][j] != matrix[j][i]:
+                return False
+            else:
+                return True
 
 
 if __name__ == '__main__':

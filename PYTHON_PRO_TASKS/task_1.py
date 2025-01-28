@@ -3,7 +3,7 @@
 где ключами являются уникальные слова, а значениями — множества индексов строк, в которых эти слова встречаются.'''
 
 
-def words_index_map(strings: list) -> dict:
+def words_index_map(strings: list[str]) -> dict[str, set[int]]:
     """words_index_map - возвращаемый словарь
     enumerate - забирает индекс строки и саму строку из подаваемого списка
     циклом проходим по строкам и разбиваем их на слова
@@ -11,12 +11,12 @@ def words_index_map(strings: list) -> dict:
     если нет, то добавляем его в словарь
     если есть, то добавляем индекс строки в множество"""
     words_index_map = {}
-    for i, string in enumerate(strings):
+    for index, string in enumerate(strings):
         for word in string.split():
             if word not in words_index_map:
-                words_index_map[word] = {i}
+                words_index_map[word] = {index}
             else:
-                words_index_map[word].add(i)
+                words_index_map[word].add(index)
     return words_index_map
 
 # Тест

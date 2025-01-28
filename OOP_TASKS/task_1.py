@@ -23,7 +23,7 @@ __str__ - метод для вывода информации о книге
 is_year_valid - метод для проверки корректности года издания
 '''
 class Book:
-    def __init__(self, name, author, year, genre, pages):
+    def __init__(self, name: str, author: str, year: int, genre: str, pages: int):
         self.name = name
         self.author = author
         self.year = year
@@ -54,31 +54,29 @@ class Library:
     def __init__(self):
         self.books = []
 
-    def add_book(self, book):
-        if isinstance(book, Book):
-            self.books.append(book)
-        else:
-            print('Неверный тип данных')
+    def add_book(self, book: Book):
+        if book.is_year_valid:
+            if isinstance(book, Book):
+                self.books.append(book)
+            else:
+                print('Неверный тип данных')
 
-    def remove_book(self, book):
+    def remove_book(self, book: Book):
         self.books.remove(book)
 
-    def search_by_title(self, title):
+    def search_by_title(self, title: str):
         for book in self.books:
-            if book.name == title:
-                return book
+            if title.lower() in book.name.lower():
+                return book.name, book.author, book.year
         return None
 
-    def get_books_by_author(self, author):
-        books_by_author = {}
-        for book in self.books:
-            if book.author == author:
-                books_by_author[book.author] = book.name
-        return books_by_author
+    def get_books_by_author(self, author: str):
+        books_by_author = [book.name for book in self.books if author.lower() in book.author.lower()]
+        return books_by_author if books_by_author else None
 
     def get_books_sorted_by_year(self):
-        for book in sorted(self.books, key=lambda x: x.year):
-            return book
+        sorted_books = sorted(self.books, key=lambda book: book.year)
+        return [f"{book.name} - {book.author}" for book in sorted_books]
 
 
 if __name__ == '__main__':
