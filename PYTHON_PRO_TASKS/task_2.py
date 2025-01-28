@@ -4,12 +4,15 @@
 
 
 def is_symmetric(matrix: list) -> bool:
-    for i in range(len(matrix)):
-        for j in range(len(matrix)):
-            if matrix[i][j] != matrix[j][i]:
+    """is_symmetric - возвращает True, если матрица симметрична относительно главной диагонали,
+    и False в противном случае.
+    Перебираем строки матрицы и проверяем, равны ли значения в строке с индексом string
+    и в столбце с индексом column"""
+    for column in range(len(matrix)):
+        for string in range(len(matrix)):
+            if matrix[column][string] != matrix[string][column]:
                 return False
-            else:
-                return True
+    return True
 
 
 if __name__ == '__main__':
