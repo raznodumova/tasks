@@ -23,7 +23,7 @@ withdraw - метод для снятия средств
 
 
 class BankAccount:
-    def __init__(self, number: int, name: int, balance: int):
+    def __init__(self, number: int, name: str, balance: int):
         self.number = number
         self.name = name
         self.balance = balance
@@ -33,7 +33,7 @@ class BankAccount:
                 f'Имя владельца: {self.name}\n'
                 f'Баланс: {self.balance}')
 
-    def __eq__(self, other: str):
+    def __eq__(self, other: object):
         if not isinstance(other, BankAccount):
             return NotImplemented
         return self.number == other.number
@@ -75,12 +75,16 @@ class BankSystem:
             self.accounts[BankAccount.number] = BankAccount
             print('Счет успешно добавлен')
 
-    def transfer(self, account_from_number: int, account_to_number: int, amount: int):
-        if account_from_number in self.accounts and account_to_number in self.accounts:
-            if account_from_number != account_to_number:
-                self.accounts[account_from_number].withdraw(amount)
-                self.accounts[account_to_number].deposit(amount)
-                print(f'Средства успешно переведены пользователю {self.accounts[account_to_number].name}')
+    def transfer(self, account_from: int,
+                 account_to_number: int, amount: int):
+        if (account_from in self.accounts
+                and account_to_number in self.accounts):
+            if account_from != account_to_number:
+                if self.accounts[account_from].check_balance() >= amount:
+                    self.accounts[account_from].withdraw(amount)
+                    self.accounts[account_to_number].deposit(amount)
+                    print(f'Средства переведены пользователю '
+                          f'{self.accounts[account_to_number].name}')
             else:
                 print('Нельзя перевести средства самому себе')
 

@@ -1,16 +1,18 @@
-'''Задача 1: Проверка матрицы на симметричность
+"""Задача 1: Проверка матрицы на симметричность
 Напишите функцию, которая принимает на вход квадратную матрицу и проверяет,
-является ли она симметричной относительно главной диагонали.'''
+является ли она симметричной относительно главной диагонали."""
 
 
-def is_symmetric(matrix: list) -> bool:
-    """is_symmetric - возвращает True, если матрица симметрична относительно главной диагонали,
+def is_symmetric(matrix: list[list[int]]) -> bool:
+    """is_symmetric - возвращает True,
+    если матрица симметрична относительно главной диагонали,
     и False в противном случае.
-    Перебираем строки матрицы и проверяем, равны ли значения в строке с индексом string
-    и в столбце с индексом column"""
-    for column in range(len(matrix)):
-        for string in range(len(matrix)):
-            if matrix[column][string] != matrix[string][column]:
+    Перебираем строки матрицы и проверяем,
+    равны ли значения в строке с индексом row
+    и в столбце с индексом col"""
+    for row in range(len(matrix)):
+        for col in range(row, len(matrix)):
+            if matrix[col][row] != matrix[row][col]:
                 return False
     return True
 
