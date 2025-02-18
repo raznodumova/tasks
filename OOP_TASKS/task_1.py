@@ -13,17 +13,12 @@
 Вывод всех книг одного автора
 Вывод всех книг, отсортированных по году издания"""
 
-'''
-создаем класс книги
-__init__ - конструктор
-__str__ - метод для вывода информации о книге
-is_year_valid - метод для проверки корректности года издания
-'''
-
 
 class Book:
+    """Cоздаем класс книги."""
     def __init__(self, name: str, author: str,
                  year: int, genre: str, pages: int):
+        """Конструктор. """
         self.name = name
         self.author = author
         self.year = year
@@ -31,6 +26,7 @@ class Book:
         self.pages = pages
 
     def __str__(self):
+        """Метод для вывода информации о книге."""
         return (f'Название: {self.name}\n'
                 f'Автор: {self.author}\n'
                 f'Год издания: {self.year}\n'
@@ -39,38 +35,33 @@ class Book:
 
     @property
     def is_year_valid(self):
+        """Метод для проверки года издания."""
         return self.year > 0
 
 
-'''
-создаем библиотеку с книгами
-__init__ - конструктор
-add_book - метод для добавления книги в библиотеку
-remove_book - метод для удаления книги из библиотеки
-search_by_title - метод для поиска книги по названию
-get_books_by_author - метод для поиска книг по автору
-get_books_sorted_by_year - метод для сортировки книг по году издания
-'''
-
-
 class Library:
+    """Cоздаем библиотеку."""
     def __init__(self):
+        """Конструктор."""
         self.books = []
 
     def add_book(self, book: Book):
+        """Метод для добавления книги в библиотеку."""
         if isinstance(book, Book):
             if book.is_year_valid:
                 self.books.append(book)
             else:
-                print('Год издания должен быть положительным числом.')
+                raise ValueError('Год издания должен быть больше нуля.')
 
     def remove_book(self, book: Book):
+        """Метод для удаления книги из библиотеки."""
         if book in self.books:
             self.books.remove(book)
         else:
-            print('Такой книги нет в библиотеке.')
+            raise ValueError('Такой книги нет в библиотеке.')
 
     def search_by_title(self, title: str):
+        """Метод для поиска книги по названию."""
         books_by_title = []
         for book in self.books:
             if title.lower() in book.name.lower():
@@ -78,13 +69,15 @@ class Library:
         return books_by_title if books_by_title else []
 
     def get_books_by_author(self, author: str):
+        """Метод для поиска книг по автору."""
         books_by_author = []
         for book in self.books:
             if author.lower() in book.author.lower():
                 books_by_author.append(book.name)
-        return books_by_author if books_by_author else None
+        return books_by_author if books_by_author else []
 
     def get_books_sorted_by_year(self):
+        """Метод для сортировки книг по году издания."""
         sorted_books = sorted(self.books, key=lambda book: book.year)
         return [f"{book.name} - {book.author}" for book in sorted_books]
 

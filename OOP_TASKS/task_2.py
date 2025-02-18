@@ -11,82 +11,78 @@
 Используйте магические методы для вывода информации о счете
 и для проверки равенства счетов (например, по номеру счета)."""
 
-'''
-Создаем класс счета
-__init__ - конструктор
-__str__ - метод для вывода информации о счете
-__eq__ - метод для проверки равенства счетов
-check_balance - метод для проверки баланса
-deposit - метод для пополнения счета
-withdraw - метод для снятия средств
-'''
-
 
 class BankAccount:
+    """Создаем класс счета."""
     def __init__(self, number: int, name: str, balance: int):
+        """Конструктор счета."""
         self.number = number
         self.name = name
         self.balance = balance
 
     def __str__(self):
+        """Вывод информации о счете."""
         return (f'Номер счета: {self.number}\n'
                 f'Имя владельца: {self.name}\n'
                 f'Баланс: {self.balance}')
 
     def __eq__(self, other: object):
+        """Проверка равенства счетов."""
         if not isinstance(other, BankAccount):
             return NotImplemented
         return self.number == other.number
 
     def check_balance(self):
+        """Проверка баланса."""
         return self.balance
 
     def deposit(self, amount: int):
+        """Метод для пополнения счета."""
         if amount > 0:
             self.balance += amount
             print('Счет успешно пополнен')
         else:
-            print('Сумма пополнения должна быть положительной')
+            raise ValueError('Сумма пополнения должна быть больше нуля')
 
     def withdraw(self, amount: int):
+        """Метод для снятия средств."""
         if amount > 0 and amount <= self.balance:
             self.balance -= amount
             print(f'Средства сняты. Текущий баланс: {self.balance}')
         else:
-            print('Недостаточно средств')
-
-
-'''
-создаем класс банковской системы
-__init__ - конструктор
-add_account - метод для добавления счета в систему
-transfer - метод для перевода средств между счетами
-'''
+            raise ValueError('Недостаточно средств')
 
 
 class BankSystem:
+    """Создаем банковскую систему."""
     def __init__(self):
+        """Конструктор банковской системы."""
         self.accounts = {}
 
-    def add_account(self, BankAccount: BankAccount):
+    def add_account(self, account: BankAccount):
+        """Метод для добавления счета."""
         if BankAccount.number in self.accounts:
             print('Такой счет уже существует')
         else:
-            self.accounts[BankAccount.number] = BankAccount
+            self.accounts[account.number] = BankAccount
             print('Счет успешно добавлен')
+
+    def check_account(self, number: int):
+        """Метод для проверки счета."""
+        if number in self.accounts:
+            return number
+        else:
+            raise ValueError('Такого счета не существует')
 
     def transfer(self, account_from: int,
                  account_to_number: int, amount: int):
-        if (account_from in self.accounts
-                and account_to_number in self.accounts):
-            if account_from != account_to_number:
-                if self.accounts[account_from].check_balance() >= amount:
-                    self.accounts[account_from].withdraw(amount)
-                    self.accounts[account_to_number].deposit(amount)
-                    print(f'Средства переведены пользователю '
-                          f'{self.accounts[account_to_number].name}')
+        """Метод для перевода средств."""
+        if self.check_account(account_from) and self.check_account(account_to_number):
+            if amount > 0 and amount <= self.accounts[account_from].balance:
+                self.accounts[account_from].withdraw(amount)
+                self.accounts[account_to_number].deposit(amount)
             else:
-                print('Нельзя перевести средства самому себе')
+                raise ValueError('Ошибка при переводе средств. Недостаточно средств.')
 
 
 if __name__ == '__main__':
